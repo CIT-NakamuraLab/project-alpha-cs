@@ -8,6 +8,7 @@
   "jsxSingleQuote": true,
   "trailingComma": "none",
   "bracketSpacing": true,
+  "bracketSameLine": false,
   "arrowParens": "avoid",
   "rangeStart": 0,
   "filepath": "none",
