@@ -34,6 +34,8 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+certificates/*.crt
+certificates/*.key
 
 # vercel
 .vercel

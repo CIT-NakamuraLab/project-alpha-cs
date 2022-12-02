@@ -5,6 +5,7 @@
   "scripts": {
     "start": "next start",
     "dev": "next dev",
+    "dev:ssl": "node sslServer.js",
     "build": "next build",
     "lint": "next lint",
     "prettier:check": "prettier --check ./src/**/*.{ts,tsx}",
