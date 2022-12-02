@@ -69,6 +69,8 @@ model Log {
   type          Int
   has_key       Boolean
   reader_id     Int
+
+  @@map("logs")
 }
 
 model Reader {
@@ -76,6 +78,8 @@ model Reader {
   client_id    String @unique
   client_token String
   name         String
+
+  @@map("readers")
 }
 
 model VerificationToken {
