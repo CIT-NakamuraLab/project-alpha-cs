@@ -1,0 +1,27 @@
+name: Prisma Schema Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ develop ]
+
+env:
+  DATABASE_URL: ${{ secrets.VALIDATION_DATABASE_URL }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run prisma schema validation
+        run: yarn prisma:check

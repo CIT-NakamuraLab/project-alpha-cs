@@ -17,22 +17,22 @@ model Example {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String  @map("user_id")
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
   type              String
   provider          String
-  providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  providerAccountId String   @map("provider_account_id")
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?  @db.Text
   session_state     String?
   ok                Boolean?
   state             String?
 
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -63,18 +63,18 @@ model User {
 }
 
 model Log {
-  id            Int @id @default(autoincrement())
-  student_id    String
-  datetime      DateTime @default(now())
-  type          Int
-  has_key       Boolean
-  reader_id     Int
+  id         Int      @id @default(autoincrement())
+  student_id String
+  datetime   DateTime @default(now())
+  type       Int
+  has_key    Boolean
+  reader_id  Int
 
   @@map("logs")
 }
 
 model Reader {
-  id           Int @id @default(autoincrement())
+  id           Int    @id @default(autoincrement())
   client_id    String @unique
   client_token String
   name         String
