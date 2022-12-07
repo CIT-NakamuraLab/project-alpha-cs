@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import React from 'react'
 import SettingMenu, { Select } from '../../components/SettingMenu'
 
 function user() {

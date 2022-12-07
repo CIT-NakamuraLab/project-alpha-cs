@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import React from 'react'
 import ReaderBody from '../../components/ReaderBody'
 import SettingMenu, { Select } from '../../components/SettingMenu'
 
