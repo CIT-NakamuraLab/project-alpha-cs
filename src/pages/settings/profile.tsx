@@ -8,7 +8,7 @@ function profile() {
         <title>プロファイル設定</title>
       </Head>
 
-      <SettingMenu select={Select.Profile} title="プロファイル設定" bodyElement={<div></div>} />
+      <SettingMenu select={Select.Profile} title='プロファイル設定' bodyElement={<div></div>} />
     </div>
   )
 }

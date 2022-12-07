@@ -9,7 +9,7 @@ function reader() {
         <title>カードリーダー管理</title>
       </Head>
       
-      <SettingMenu select={Select.Reader} title="カードリーダー管理" bodyElement={<ReaderBody />} />
+      <SettingMenu select={Select.Reader} title='カードリーダー管理' bodyElement={<ReaderBody />} />
     </div>
   )
 }
