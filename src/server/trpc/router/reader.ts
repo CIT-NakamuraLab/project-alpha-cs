@@ -29,5 +29,10 @@ export const readerRouter = router ({
         },
       })
       return result
+    }),
+
+  showReaders: protectedProcedure
+    .query(async ({ctx}) => {
+      return await ctx.prisma.reader.findMany()
     })
 })
