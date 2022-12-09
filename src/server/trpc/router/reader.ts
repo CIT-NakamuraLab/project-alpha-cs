@@ -18,5 +18,16 @@ export const readerRouter = router ({
       }
       const result = await ctx.prisma.reader.create(object)
       return {client_token: clientToken, ...result}
+    }),
+
+  deleteReader: protectedProcedure
+    .input(z.object({clientId: z.string()}))
+    .query(async ({ctx, input}) => {
+      const result = await ctx.prisma.reader.delete({
+        where: {
+          client_id: input.clientId,
+        },
+      })
+      return result
     })
 })
