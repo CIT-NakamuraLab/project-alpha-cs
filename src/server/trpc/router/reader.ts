@@ -3,7 +3,7 @@ import { z } from "zod";
 import { generateClientId, generateClientToken, generateHashedToken } from "../../../utils/client";
 
 export const readerRouter = router ({
-  register: protectedProcedure
+  registerReader: protectedProcedure
     .input(z.object({name: z.string()}))
     .query(async ({ctx, input}) => {
       const clientToken = generateClientToken()
