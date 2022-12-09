@@ -33,7 +33,7 @@ export const readerRouter = router ({
 
   showReaders: protectedProcedure
     .query(async ({ctx}) => {
-      return await ctx.prisma.reader.findMany()
+      return await ctx.prisma.reader.findMany({select: {client_id: true, name: true}})
     }),
 
   updateReaderName: protectedProcedure
