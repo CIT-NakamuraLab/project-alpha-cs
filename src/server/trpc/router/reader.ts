@@ -23,12 +23,11 @@ export const readerRouter = router ({
   deleteReader: protectedProcedure
     .input(z.object({clientId: z.string()}))
     .query(async ({ctx, input}) => {
-      const result = await ctx.prisma.reader.delete({
+      return await ctx.prisma.reader.delete({
         where: {
           client_id: input.clientId,
         },
       })
-      return result
     }),
 
   showReaders: protectedProcedure
