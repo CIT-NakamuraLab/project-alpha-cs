@@ -34,5 +34,18 @@ export const readerRouter = router ({
   showReaders: protectedProcedure
     .query(async ({ctx}) => {
       return await ctx.prisma.reader.findMany()
+    }),
+
+  updateReaderName: protectedProcedure
+    .input(z.object({clientId: z.string(), updatedName: z.string()}))
+    .query(async ({ctx, input}) => {
+      return await ctx.prisma.reader.update({
+        where: {
+          client_id: input.clientId,
+        },
+        data: {
+          name: input.updatedName
+        }
+      })
     })
 })
