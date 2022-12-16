@@ -19,7 +19,7 @@ export const userRouter = router({
         }
       })
     }),
-  deleteStudent: protectedProcedure
+  deleteUser: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.user.delete({
