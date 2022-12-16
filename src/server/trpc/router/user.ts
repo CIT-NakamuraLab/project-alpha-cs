@@ -1,5 +1,5 @@
-import { protectedProcedure, router } from "../trpc";
-import { z } from "zod";
+import { protectedProcedure, router } from '../trpc'
+import { z } from 'zod'
 
 export const userRouter = router({
   setStudentId: protectedProcedure
@@ -15,24 +15,22 @@ export const userRouter = router({
       })
     }),
   deleteStudent: protectedProcedure
-    .input(z.object({id: z.string()}))
-    .query(async ({ctx, input}) => {
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
       return await ctx.prisma.user.delete({
         where: {
           id: input.id
         }
       })
     }),
-  isAdmin: protectedProcedure
-    .input(z.object({id: z.string()}))
-    .query(async ({ctx, input}) => {
-      return await ctx.prisma.user.findMany({
-        where: {
-          id: input.id
-        },
-        select: {
-          is_admin: true
-        }
-      })
+  isAdmin: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return await ctx.prisma.user.findMany({
+      where: {
+        id: input.id
+      },
+      select: {
+        is_admin: true
+      }
     })
+  })
 })
