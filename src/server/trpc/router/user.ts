@@ -22,5 +22,17 @@ export const userRouter = router({
           id: input.id
         }
       })
+    }),
+  isAdmin: protectedProcedure
+    .input(z.object({id: z.string()}))
+    .query(async ({ctx, input}) => {
+      return await ctx.prisma.user.findMany({
+        where: {
+          id: input.id
+        },
+        select: {
+          is_admin: true
+        }
+      })
     })
 })
