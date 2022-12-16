@@ -3,7 +3,12 @@ import { z } from 'zod'
 
 export const userRouter = router({
   setStudentId: protectedProcedure
-    .input(z.object({ id: z.string(), studentId: z.string() }))
+    .input(
+      z.object({
+        id: z.string(),
+        studentId: z.string().length(7).regex(new RegExp('[0-9]{2}[A-Z0-9]{2}[0-9]{3}'))
+      })
+    )
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.user.update({
         where: {
