@@ -1,9 +1,9 @@
-import { protectedProcedure, router } from '../trpc'
+import { adminProcedure, router } from '../trpc'
 import { z } from 'zod'
 import { generateClientId, generateClientToken, generateHashedToken } from '../../../utils/client'
 
 export const readerRouter = router({
-  registerReader: protectedProcedure
+  registerReader: adminProcedure
     .input(z.object({ name: z.string() }))
     .query(async ({ ctx, input }) => {
       const clientToken = generateClientToken()
@@ -18,7 +18,7 @@ export const readerRouter = router({
       return { client_token: clientToken, ...result }
     }),
 
-  deleteReader: protectedProcedure
+  deleteReader: adminProcedure
     .input(z.object({ clientId: z.string() }))
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.reader.delete({
@@ -28,11 +28,11 @@ export const readerRouter = router({
       })
     }),
 
-  showReaders: protectedProcedure.query(async ({ ctx }) => {
+  showReaders: adminProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.reader.findMany({ select: { client_id: true, name: true } })
   }),
 
-  updateReaderName: protectedProcedure
+  updateReaderName: adminProcedure
     .input(z.object({ clientId: z.string(), updatedName: z.string() }))
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.reader.update({

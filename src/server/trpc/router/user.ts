@@ -1,8 +1,8 @@
-import { protectedProcedure, router } from '../trpc'
+import { adminProcedure, router } from '../trpc'
 import { z } from 'zod'
 
 export const userRouter = router({
-  setStudentId: protectedProcedure
+  setStudentId: adminProcedure
     .input(
       z.object({
         id: z.string(),
@@ -19,16 +19,14 @@ export const userRouter = router({
         }
       })
     }),
-  deleteUser: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.user.delete({
-        where: {
-          id: input.id
-        }
-      })
-    }),
-  isAdmin: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+  deleteUser: adminProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return await ctx.prisma.user.delete({
+      where: {
+        id: input.id
+      }
+    })
+  }),
+  isAdmin: adminProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
     return await ctx.prisma.user.findMany({
       where: {
         id: input.id
