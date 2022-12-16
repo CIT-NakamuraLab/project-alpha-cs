@@ -19,6 +19,9 @@ jobs:
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
+      
+      - name: Generate Prisma Client
+        run: yarn run migration:generate
 
       - name: build
         run: yarn run build
