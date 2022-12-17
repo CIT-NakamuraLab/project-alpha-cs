@@ -5,7 +5,7 @@ import { generateClientId, generateClientToken, generateHashedToken } from '../.
 export const readerRouter = router({
   registerReader: adminProcedure
     .input(z.object({ name: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const clientToken = generateClientToken()
       const object = {
         data: {
@@ -20,7 +20,7 @@ export const readerRouter = router({
 
   deleteReader: adminProcedure
     .input(z.object({ clientId: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.reader.delete({
         where: {
           client_id: input.clientId
@@ -34,7 +34,7 @@ export const readerRouter = router({
 
   updateReaderName: adminProcedure
     .input(z.object({ clientId: z.string(), updatedName: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.reader.update({
         where: {
           client_id: input.clientId
