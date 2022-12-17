@@ -2,8 +2,6 @@ import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 
 import { type Context } from './context'
-import { userRouter } from './router/user'
-import { trpc } from '../../utils/trpc'
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -40,12 +38,17 @@ const isAuthed = t.middleware(({ ctx, next }) => {
  **/
 export const protectedProcedure = t.procedure.use(isAuthed)
 
-const isAdmin = t.middleware(({ ctx, next }) => {
-  if (
-    !ctx.session ||
-    !ctx.session.user ||
-    !trpc.user.isAdmin.useQuery({ id: ctx.session.user.id })
-  ) {
+const isAdmin = t.middleware(async ({ ctx, next }) => {
+  if (ctx.session && ctx.session.user) {
+    const userId = ctx.session.user.id
+    const isAdmin = await ctx.prisma.user.findUnique({
+      where: { id: userId },
+      select: { is_admin: true }
+    })
+    if (!isAdmin?.is_admin) {
+      throw new TRPCError({ code: 'FORBIDDEN' })
+    }
+  } else {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
   return next({
