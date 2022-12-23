@@ -9,7 +9,7 @@ export const userRouter = router({
         studentId: z.string().length(7).regex(new RegExp('[0-9]{2}[A-Z0-9]{2}[0-9]{3}'))
       })
     )
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.user.update({
         where: {
           id: input.id
@@ -19,13 +19,15 @@ export const userRouter = router({
         }
       })
     }),
-  deleteUser: adminProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
-    return await ctx.prisma.user.delete({
-      where: {
-        id: input.id
-      }
-    })
-  }),
+  deleteUser: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.user.delete({
+        where: {
+          id: input.id
+        }
+      })
+    }),
   isAdmin: adminProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
     return await ctx.prisma.user.findMany({
       where: {
@@ -35,5 +37,27 @@ export const userRouter = router({
         is_admin: true
       }
     })
-  })
+  }),
+  showUsers: adminProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.user.findMany()
+  }),
+  showUser: adminProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return await ctx.prisma.user.findUnique({
+      where: {
+        id: input.id
+      }
+    })
+  }),
+  setAdmin: adminProcedure
+    .input(z.object({ id: z.string(), isAdmin: z.boolean() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.user.update({
+        where: {
+          id: input.id
+        },
+        data: {
+          is_admin: input.isAdmin
+        }
+      })
+    })
 })
