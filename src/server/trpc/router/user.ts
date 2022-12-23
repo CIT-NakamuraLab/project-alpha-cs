@@ -40,5 +40,17 @@ export const userRouter = router({
   }),
   showUsers: adminProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findMany()
-  })
+  }),
+  setAdmin: adminProcedure
+    .input(z.object({ id: z.string(), isAdmin: z.boolean() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.user.update({
+        where: {
+          id: input.id
+        },
+        data: {
+          is_admin: input.isAdmin
+        }
+      })
+    })
 })
