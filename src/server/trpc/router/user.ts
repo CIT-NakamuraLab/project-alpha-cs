@@ -37,5 +37,8 @@ export const userRouter = router({
         is_admin: true
       }
     })
+  }),
+  showUsers: adminProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.user.findMany()
   })
 })
