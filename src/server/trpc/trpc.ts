@@ -41,11 +41,11 @@ export const protectedProcedure = t.procedure.use(isAuthed)
 const isAdmin = t.middleware(async ({ ctx, next }) => {
   if (ctx.session && ctx.session.user) {
     const userId = ctx.session.user.id
-    const isAdmin = await ctx.prisma.user.findUnique({
+    const result = await ctx.prisma.user.findUnique({
       where: { id: userId },
       select: { is_admin: true }
     })
-    if (!isAdmin?.is_admin) {
+    if (!result?.is_admin) {
       throw new TRPCError({ code: 'FORBIDDEN' })
     }
   } else {
