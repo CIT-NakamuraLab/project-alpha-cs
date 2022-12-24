@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { google } from 'googleapis'
 import { oAuth2Client } from '../../../utils/google'
 import { getServerAuthSession } from '../../../server/common/get-server-auth-session'
+import { prisma } from '../../../server/db/client'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.code == null || req.query.code == '') {
@@ -26,6 +27,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const studentId = user.email.substring(1, 8)
+
+    const result = await prisma.user.update({
+      where: {
+        id: session.user?.id
+      },
+      data: {
+        student_id: studentId
+      }
+    })
+
+    console.log(result)
 
     res.status(200).json({ status: 'OK', student_id: studentId })
   } else {
