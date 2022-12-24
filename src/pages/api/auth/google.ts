@@ -6,7 +6,7 @@ import { prisma } from '../../../server/db/client'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.query.code == null || req.query.code == '') {
-    return res.status(400).send('Bad Request')
+    return res.status(400).json({ status: 'Bad Request', message: 'Code is missing' })
   }
 
   const session = await getServerAuthSession({ req, res })
@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = response.data
 
     if (!user.email?.endsWith('@s.chibakoudai.jp')) {
-      return res.status(403).json({ status: 'Error', message: 'Unsupported Account Type' })
+      return res.status(403).json({ status: 'Error', message: 'Unsupported account type' })
     }
 
     const studentId = user.email.substring(1, 8)
@@ -41,6 +41,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200).json({ status: 'OK', student_id: studentId })
   } else {
-    res.status(401).json({ status: 'Unauthorized', message: ' Need to Login with Slack Account' })
+    res.status(401).json({ status: 'Unauthorized', message: ' Need to login with slack account' })
   }
 }
