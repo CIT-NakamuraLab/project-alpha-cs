@@ -41,6 +41,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200).json({ status: 'OK', student_id: studentId })
   } else {
-    res.status(401).json({ status: 'Unauthorized', message: ' Need to login with slack account' })
+    res.status(401).json({ status: 'Unauthorized', message: 'Need to login with slack account' })
   }
 }
