@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { Layout } from './Layout'
+import { Layout } from '../layout/Layout'
 import { KeyImage } from './KeyImage'
 import { Pickup } from './Pickup'
 import { MemberCount } from './MemberCount'
-import { HasKeyContext } from '../pages'
+import { HasKeyContext } from '../../pages'
 
 export const Contents = () => {
   const [G_AuthFlag, setG_AuthFlag] = useState(false)

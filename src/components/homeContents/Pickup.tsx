@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
-import { HasKeyContext } from '../pages'
+import { HasKeyContext } from '../../pages'
 
 export const Pickup = () => {
   const [pickUp, setPickUp] = useState(false)

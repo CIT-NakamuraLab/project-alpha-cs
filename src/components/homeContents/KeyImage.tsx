@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useContext } from 'react'
-import { HasKeyContext } from '../pages'
+import { HasKeyContext } from '../../pages'
 
 export const KeyImage = () => {
   const { hasKey } = useContext(HasKeyContext)

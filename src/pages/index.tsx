@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { createContext, useState } from 'react'
 import { SigninButton } from '../components/SignInButton'
-import { Contents } from '../components/Contents'
+import { Contents } from '../components/homeContents/Contents'
 
 export const HasKeyContext = createContext(
   {} as {
