@@ -6,11 +6,11 @@ import { MemberCount } from './MemberCount'
 import { HasKeyContext } from '../../pages'
 
 export const Contents = () => {
-  const [g_AuthFlag, setG_AuthFlag] = useState(false)
+  const [G_AuthFlag, setG_AuthFlag] = useState(false)
   const {hasKey,setHasKey} = useContext(HasKeyContext)
   return (
     <>
-      {!g_AuthFlag 
+      {!G_AuthFlag 
         ? <div className="my-64">
             <h2 className="text-center">千葉工大のGoogleアカウントによる認証を行なってください</h2>
             <div className='mt-14 text-center'>
