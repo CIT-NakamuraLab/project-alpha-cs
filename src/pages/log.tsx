@@ -3,7 +3,7 @@ import SettingMenu, { Select } from '../components/SettingMenu'
 
 function log() {
   return (
-    <div className='min-h-screen w-screen bg-rose-50'>
+    <div>
       <Head>
         <title>開閉ログ</title>
       </Head>
