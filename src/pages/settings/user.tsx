@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import SettingMenu, { Select } from '../../components/SettingMenu'
-import {UserBody} from "../../components/UserBody"
+import { UserBody } from '../../components/UserBody'
 
 function user() {
   return (
