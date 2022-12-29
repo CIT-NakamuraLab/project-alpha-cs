@@ -17,9 +17,9 @@ export default function Home() {
     console.log(session)
   }
   const slackSignIn = () => {
-    signIn("slack")
+    signIn('slack')
   }
-  
+
   return (
     <main className='relative'>
       {session ? (
