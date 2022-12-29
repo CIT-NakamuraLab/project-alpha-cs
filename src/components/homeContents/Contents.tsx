@@ -4,7 +4,7 @@ import { KeyImage } from './KeyImage'
 import { Pickup } from './Pickup'
 import { MemberCount } from './MemberCount'
 import { HasKeyContext } from '../../pages'
-import { SignInButton } from '../SignInButton'
+import { GeneralButton } from '../GeneralButton'
 
 export const Contents = () => {
   const [G_AuthFlag, setG_AuthFlag] = useState(false)
@@ -18,7 +18,9 @@ export const Contents = () => {
       {!G_AuthFlag ? (
         <div className='my-64'>
           <h2 className='text-center'>千葉工大のGoogleアカウントによる認証を行なってください</h2>
-          <SignInButton clickFunction={googleSignIn} />
+          <div className='mt-14 text-center'>
+            <GeneralButton label='SIGN IN' clickFunction={googleSignIn} />
+          </div>
         </div>
       ) : (
         <Layout title='Key Manage App'>

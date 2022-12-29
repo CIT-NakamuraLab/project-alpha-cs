@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import SettingMenu, { Select } from '../../components/SettingMenu'
 import { signOut } from 'next-auth/react'
+import { GeneralButton } from '../../components/GeneralButton'
 
 function profile() {
   return (
@@ -14,14 +15,12 @@ function profile() {
         title='プロファイル設定'
         bodyElement={
           <div className='mt-40 text-center'>
-            <button
-              onClick={() => {
+            <GeneralButton
+              label='SIGN OUT'
+              clickFunction={() => {
                 signOut({ callbackUrl: 'https://localhost:3000' })
               }}
-              className='mx-auto block h-20 w-40 rounded-full bg-black py-3 px-10 text-xs uppercase text-white hover:bg-gray-700'
-            >
-              <p className='text-base'>Sign Out</p>
-            </button>
+            />
           </div>
         }
       />
