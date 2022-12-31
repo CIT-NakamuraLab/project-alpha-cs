@@ -1,65 +1,41 @@
-import Head from 'next/head'
-import { useSession } from 'next-auth/react'
-import { TbMenu2 } from 'react-icons/tb'
-import { useState } from 'react'
-import Link from 'next/link'
+import { signIn, useSession } from 'next-auth/react'
+import { createContext, useState } from 'react'
+import { GeneralButton } from '../components/GeneralButton'
+import { Contents } from '../components/homeContents/Contents'
+
+export const HasKeyContext = createContext(
+  {} as {
+    hasKey: boolean
+    setHasKey: React.Dispatch<React.SetStateAction<boolean>>
+  }
+)
 
 export default function Home() {
   const { data: session, status } = useSession()
-
+  const [hasKey, setHasKey] = useState(false)
   if (session && status == 'authenticated') {
     console.log(session)
   }
-
-  const [pickUp, setPickUp] = useState(false)
-
-  const togglePickUp = () => {
-    setPickUp(prevState => !prevState)
+  const slackSignIn = () => {
+    signIn('slack')
   }
 
   return (
-    <div>
-      <Head>
-        <title>Key Manage Project</title>
-        <meta name='description' content='Key Manage Project' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
-      <div className='relative flex min-h-screen w-screen select-none flex-col items-center justify-center'>
-        <Link href='/settings/profile'>
-          <TbMenu2 className='absolute top-5 right-5 h-10 w-10 cursor-pointer hover:shadow-2xl' />
-        </Link>
-
-        <p className='text-2xl'>メインメニュー</p>
-
-        <div className='py-5' />
-
-        {pickUp && <p className='text-xl text-blue-500'>名前太郎が取りに行っています...</p>}
-
-        <div className='m-1' />
-
-        <div className='py-5' />
-        {!pickUp && (
-          <button
-            className='rounded-full bg-rose-500 px-4 py-2 shadow-xl'
-            onClick={() => {
-              togglePickUp()
-            }}
-          >
-            取りに行く
-          </button>
-        )}
-
-        <div className='m-2' />
-        <button
-          className='rounded-full bg-indigo-500 px-4 py-2 shadow-md'
-          onClick={() => {
-            setPickUp(false)
-          }}
-        >
-          取りに行く強制解除
-        </button>
-      </div>
-    </div>
+    <main className='relative'>
+      {session ? (
+        <HasKeyContext.Provider value={{ hasKey, setHasKey }}>
+          <Contents />
+        </HasKeyContext.Provider>
+      ) : (
+        <div className='flex items-center justify-center py-64'>
+          <div>
+            <h2>研究室のSlackアカウントによる認証を行なってください</h2>
+            <div className='mt-14 text-center'>
+              <GeneralButton label='SIGN IN' clickFunction={slackSignIn} />
+            </div>
+          </div>
+        </div>
+      )}
+    </main>
   )
 }

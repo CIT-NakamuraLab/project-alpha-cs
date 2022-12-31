@@ -37,7 +37,7 @@ function SettingMenu({
                 href='/log'
                 className={
                   select == Select.Log
-                    ? 'text-green-600 underline'
+                    ? 'text-gray-800 underline'
                     : 'text-gray-400 hover:text-gray-600'
                 }
               >
@@ -49,7 +49,7 @@ function SettingMenu({
                 href='/settings/reader'
                 className={
                   select == Select.Reader
-                    ? 'text-green-600 underline'
+                    ? 'text-gray-800 underline'
                     : 'text-gray-400 hover:text-gray-600'
                 }
               >
@@ -61,7 +61,7 @@ function SettingMenu({
                 href='/settings/user'
                 className={
                   select == Select.User
-                    ? 'text-green-600 underline'
+                    ? 'text-gray-800 underline'
                     : 'text-gray-400 hover:text-gray-600'
                 }
               >
@@ -73,7 +73,7 @@ function SettingMenu({
               href='/settings/profile'
               className={
                 select == Select.Profile
-                  ? 'text-green-600 underline'
+                  ? 'text-gray-800 underline'
                   : 'text-gray-400 hover:text-gray-600'
               }
             >
