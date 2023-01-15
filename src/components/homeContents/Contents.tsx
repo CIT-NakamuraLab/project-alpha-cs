@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { useRouter } from 'next/router'
 import { Layout } from '../layout/Layout'
 import { KeyImage } from './KeyImage'
 import { Pickup } from './Pickup'
@@ -6,11 +7,18 @@ import { MemberCount } from './MemberCount'
 import { HasKeyContext } from '../../pages'
 import { GeneralButton } from '../GeneralButton'
 
-export const Contents = () => {
-  const [G_AuthFlag, setG_AuthFlag] = useState(false)
+type Props = {
+  authUrl: string
+}
+
+export const Contents = ({authUrl}: Props) => {
+  //const [G_AuthFlag, setG_AuthFlag] = useState(false)
+  const G_AuthFlag = false
   const { hasKey, setHasKey } = useContext(HasKeyContext)
+  const router = useRouter()
   const googleSignIn = () => {
-    setG_AuthFlag(prev => !prev)
+    //setG_AuthFlag(prev => !prev)
+    router.push(authUrl)
   }
 
   return (

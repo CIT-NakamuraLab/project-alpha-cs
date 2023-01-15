@@ -2,6 +2,11 @@ import { signIn, useSession } from 'next-auth/react'
 import { createContext, useState } from 'react'
 import { GeneralButton } from '../components/GeneralButton'
 import { Contents } from '../components/homeContents/Contents'
+import { oAuth2Client, scope } from '../utils/google'
+
+type Props = {
+  authUrl: string
+}
 
 export const HasKeyContext = createContext(
   {} as {
@@ -10,7 +15,7 @@ export const HasKeyContext = createContext(
   }
 )
 
-export default function Home() {
+export default function Home({authUrl}: Props) {
   const { data: session, status } = useSession()
   const [hasKey, setHasKey] = useState(false)
   if (session && status == 'authenticated') {
@@ -24,7 +29,7 @@ export default function Home() {
     <main className='relative'>
       {session ? (
         <HasKeyContext.Provider value={{ hasKey, setHasKey }}>
-          <Contents />
+          <Contents authUrl={authUrl} />
         </HasKeyContext.Provider>
       ) : (
         <div className='flex items-center justify-center py-64'>
@@ -38,4 +43,17 @@ export default function Home() {
       )}
     </main>
   )
+}
+
+
+export const getStaticProps = async () => {
+  const authUrl = oAuth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: scope
+  })
+  return {
+    props: {
+      authUrl
+    }
+  }
 }

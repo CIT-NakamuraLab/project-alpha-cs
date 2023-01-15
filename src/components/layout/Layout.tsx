@@ -27,7 +27,10 @@ export const Layout = ({ children, title }: LayoutProps) => {
         </nav>
       </header>
 
-      {children}
+      <main>
+        {children}
+      </main>
+      
     </>
   )
 }
