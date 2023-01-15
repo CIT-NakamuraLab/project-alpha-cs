@@ -11,7 +11,7 @@ type Props = {
   authUrl: string
 }
 
-export const Contents = ({authUrl}: Props) => {
+export const Contents = ({ authUrl }: Props) => {
   //const [G_AuthFlag, setG_AuthFlag] = useState(false)
   const G_AuthFlag = false
   const { hasKey, setHasKey } = useContext(HasKeyContext)

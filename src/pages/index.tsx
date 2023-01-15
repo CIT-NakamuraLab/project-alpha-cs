@@ -15,7 +15,7 @@ export const HasKeyContext = createContext(
   }
 )
 
-export default function Home({authUrl}: Props) {
+export default function Home({ authUrl }: Props) {
   const { data: session, status } = useSession()
   const [hasKey, setHasKey] = useState(false)
   if (session && status == 'authenticated') {
@@ -44,7 +44,6 @@ export default function Home({authUrl}: Props) {
     </main>
   )
 }
-
 
 export const getStaticProps = async () => {
   const authUrl = oAuth2Client.generateAuthUrl({
