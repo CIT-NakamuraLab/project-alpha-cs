@@ -27,7 +27,7 @@ export default function Home() {
           <Contents />
         </HasKeyContext.Provider>
       ) : (
-        <div className='flex items-center justify-center py-64'>
+        <div className='flex items-center justify-center py-64 h-screen'>
           <div>
             <h2>研究室のSlackアカウントによる認証を行なってください</h2>
             <div className='mt-14 text-center'>
