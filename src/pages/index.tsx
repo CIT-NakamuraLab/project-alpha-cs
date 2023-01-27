@@ -27,9 +27,11 @@ export default function Home() {
           <Contents />
         </HasKeyContext.Provider>
       ) : (
-        <div className='flex items-center justify-center py-64 h-screen'>
+        <div className='flex h-screen items-center justify-center py-64'>
           <div>
-            <h2 className='text-center mx-16 text-xl'>研究室のSlackアカウントで認証を行なってください</h2>
+            <h2 className='mx-16 text-center text-xl'>
+              研究室のSlackアカウントで認証を行なってください
+            </h2>
             <div className='mt-14 text-center'>
               <GeneralButton label='SIGN IN' clickFunction={slackSignIn} />
             </div>
