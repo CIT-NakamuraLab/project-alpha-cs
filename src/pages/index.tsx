@@ -29,7 +29,7 @@ export default function Home() {
       ) : (
         <div className='flex items-center justify-center py-64 h-screen'>
           <div>
-            <h2>研究室のSlackアカウントによる認証を行なってください</h2>
+            <h2 className='text-center mx-16 text-xl'>研究室のSlackアカウントで認証を行なってください</h2>
             <div className='mt-14 text-center'>
               <GeneralButton label='SIGN IN' clickFunction={slackSignIn} />
             </div>

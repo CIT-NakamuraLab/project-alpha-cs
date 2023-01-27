@@ -3,7 +3,8 @@ import Image from 'next/image'
 import { GeneralButton } from '../components/GeneralButton'
 
 const googleAuthResult = () => {
-  const authFlag=false
+  const authFlag=true
+
   return (
     <>
       <div className="flex justify-center items-center h-screen">
@@ -36,7 +37,7 @@ const googleAuthResult = () => {
                 <Image src={"/images/badmark.png"} alt="ばつ印の画像" width={100} height={100}/>
               </div>
               <p className='mt-10 text-3xl text-center'>登録が失敗しました</p>
-              <table className="border-l-4 border-black mt-8 ml-12 w-80">
+              <table className="border-l-4 border-black mt-8 ml-12 w-80 sm:w-auto">
                 <tbody>
                   <tr>
                     <th className="w-32 text-left pl-2 align-top">ステータス:</th>
