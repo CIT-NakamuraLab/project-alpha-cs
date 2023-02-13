@@ -9,7 +9,7 @@ type Props = {
   userData: User[]
 }
 
-const googleAuthResult = ({userData}: Props) => {
+const googleAuthResult = ({ userData }: Props) => {
   const authFlag = false
   console.log(userData)
   return (
@@ -29,15 +29,15 @@ const googleAuthResult = ({userData}: Props) => {
               <p className='mt-10 text-center text-3xl'>登録が完了しました</p>
               <div className='mt-8 border-l-4 border-black pl-2'>
                 <div className='flex'>
-                  <p className='text-left w-20'>学籍番号:</p>
+                  <p className='w-20 text-left'>学籍番号:</p>
                   <p className='w-40 sm:w-auto'>{userData[0]?.student_id}</p>
                 </div>
                 <div className='flex pt-2'>
-                  <p className='text-left w-20'>E-mail:</p>
+                  <p className='w-20 text-left'>E-mail:</p>
                   <p className='w-40 sm:w-auto'>{userData[0]?.email}</p>
                 </div>
                 <div className='flex pt-2'>
-                  <p className='text-left w-20'>氏名:</p>
+                  <p className='w-20 text-left'>氏名:</p>
                   <p className='w-40 sm:w-auto'>{userData[0]?.name}</p>
                 </div>
               </div>
@@ -50,11 +50,11 @@ const googleAuthResult = ({userData}: Props) => {
               <p className='mt-10 text-center text-3xl'>登録が失敗しました</p>
               <div className='mt-8 border-l-4 border-black pl-2'>
                 <div className='flex'>
-                  <p className='text-left w-24'>ステータス:</p>
+                  <p className='w-24 text-left'>ステータス:</p>
                   <p className='w-40 sm:w-auto'>学籍番号取得エラー</p>
                 </div>
                 <div className='flex pt-2'>
-                  <p className='text-left w-24'>メッセージ:</p>
+                  <p className='w-24 text-left'>メッセージ:</p>
                   <p className='w-40 sm:w-auto'>学籍番号の登録に失敗しました</p>
                 </div>
               </div>
@@ -71,12 +71,11 @@ const googleAuthResult = ({userData}: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const userData: User[] = await prisma.user.findMany()
-  return{
-    props:{
-      userData,
+  return {
+    props: {
+      userData
     }
   }
 }
 
 export default googleAuthResult
-
