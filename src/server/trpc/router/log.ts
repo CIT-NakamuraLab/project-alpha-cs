@@ -33,7 +33,10 @@ export const logRouter = router({
         }
       })
     )
-
-    return activeUsers
+    if (activeUsers[0] !== undefined && activeUsers[0] !== null) {
+      return activeUsers as string[]
+    } else {
+      return []
+    }
   })
 })
