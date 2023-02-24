@@ -67,7 +67,7 @@ model Log {
   student_id String
   datetime   DateTime @default(now())
   type       Int
-  has_key    Boolean
+  has_key    Boolean  @default(false)
   reader_id  Int
 
   @@map("logs")
@@ -76,7 +76,7 @@ model Log {
 model Reader {
   id                Int    @id @default(autoincrement())
   client_id         String @unique
-  client_token_hash String
+  client_token_hash String @unique
   name              String
 
   @@map("readers")
