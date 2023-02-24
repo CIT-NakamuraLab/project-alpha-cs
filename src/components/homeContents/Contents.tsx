@@ -16,15 +16,19 @@ export const Contents = () => {
   return (
     <>
       {!G_AuthFlag ? (
-        <div className='my-64'>
-          <h2 className='text-center'>千葉工大のGoogleアカウントによる認証を行なってください</h2>
-          <div className='mt-14 text-center'>
-            <GeneralButton label='SIGN IN' clickFunction={googleSignIn} />
+        <div className='flex h-screen items-center justify-center py-64'>
+          <div>
+            <h2 className='mx-16 text-center'>
+              千葉工大のGoogleアカウントによる認証を行なってください
+            </h2>
+            <div className='mt-14 text-center'>
+              <GeneralButton label='SIGN IN' clickFunction={googleSignIn} />
+            </div>
           </div>
         </div>
       ) : (
         <Layout title='Key Manage App'>
-          <div className='mt-24'>
+          <div className='my-24'>
             <div className='absolute top-5 left-5'>
               <button
                 className='border-2 border-black'
