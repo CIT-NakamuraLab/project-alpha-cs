@@ -1,15 +1,18 @@
 import React from 'react'
+import { useSession } from 'next-auth/react'
 import { useState, useContext } from 'react'
 import { HasKeyContext } from '../../pages'
 
+//このページでやりたいことは、「鍵を取りに行くボタン」を押した人の情報をどこかに格納する処理とそれを取得して表示する処理
 export const Pickup = () => {
+  const session = useSession()
   const [pickUp, setPickUp] = useState(false)
   const togglePickUp = () => {
     setPickUp(prevState => !prevState)
   }
   const { hasKey } = useContext(HasKeyContext)
-  const userName = '〇〇さん'
-  const myAccountName = '〇〇さん'
+  const userName = 'ooさん' //何かしらから取得した現在取りに行っている人の名前
+  const myAccountName = session.data?.user?.name
 
   return (
     <>

@@ -1,16 +1,25 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { useSession } from 'next-auth/react'
 import { Layout } from '../layout/Layout'
 import { KeyImage } from './KeyImage'
 import { Pickup } from './Pickup'
 import { MemberCount } from './MemberCount'
 import { HasKeyContext } from '../../pages'
 import { GeneralButton } from '../GeneralButton'
+import { useRouter } from 'next/router'
+import type { User } from '@prisma/client'
 
-export const Contents = () => {
-  const [G_AuthFlag, setG_AuthFlag] = useState(false)
+//ログのデータから鍵の有無を確認して画面を切り替える
+//鍵の有無は、「has_keyがtrueの後に退室もしくは途中退室でhas_keyがtrue」であった場合は鍵がないということ
+export const Contents = ({ authUrl, users }: { authUrl: string; users: User[] }) => {
+  const router = useRouter()
+  const session = useSession()
   const { hasKey, setHasKey } = useContext(HasKeyContext)
+  const user_id = session.data?.user?.id
+  const myAccount = users.filter(user => user_id === user.id)
+  const G_AuthFlag = myAccount[0]?.student_id ? true : false
   const googleSignIn = () => {
-    setG_AuthFlag(prev => !prev)
+    router.push(authUrl)
   }
 
   return (

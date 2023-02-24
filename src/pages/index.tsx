@@ -1,7 +1,11 @@
+import type { GetServerSideProps } from 'next'
+import { oAuth2Client, scope } from '../utils/google'
 import { signIn, useSession } from 'next-auth/react'
 import { createContext, useState } from 'react'
 import { GeneralButton } from '../components/GeneralButton'
 import { Contents } from '../components/homeContents/Contents'
+import { prisma } from '../server/db/client'
+import type { User } from '@prisma/client'
 
 export const HasKeyContext = createContext(
   {} as {
@@ -10,7 +14,7 @@ export const HasKeyContext = createContext(
   }
 )
 
-export default function Home() {
+export default function Home({ authUrl, users }: { authUrl: string; users: User[] }) {
   const { data: session, status } = useSession()
   const [hasKey, setHasKey] = useState(false)
   if (session && status == 'authenticated') {
@@ -24,7 +28,7 @@ export default function Home() {
     <main className='relative'>
       {session ? (
         <HasKeyContext.Provider value={{ hasKey, setHasKey }}>
-          <Contents />
+          <Contents authUrl={authUrl} users={users} />
         </HasKeyContext.Provider>
       ) : (
         <div className='flex h-screen items-center justify-center py-64'>
@@ -40,4 +44,19 @@ export default function Home() {
       )}
     </main>
   )
+}
+
+//ログを取得する処理追加予定
+export const getServerSideProps: GetServerSideProps = async () => {
+  const authUrl = oAuth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: scope
+  })
+  const users: User[] = await prisma.user.findMany()
+  return {
+    props: {
+      authUrl,
+      users
+    }
+  }
 }
