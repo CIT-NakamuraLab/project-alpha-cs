@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { LogType } from '../../../utils/const'
 import { adminProcedure, publicProcedure, router } from '../trpc'
 
 export const logRouter = router({
@@ -27,7 +28,7 @@ export const logRouter = router({
             }
           })
 
-          if (result?.type == 0) {
+          if (result?.type === LogType.ENTER) {
             return user.name
           }
         }
