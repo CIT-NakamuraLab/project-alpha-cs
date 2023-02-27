@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { LogType } from '../../../utils/const'
 import { adminProcedure, publicProcedure, router } from '../trpc'
@@ -16,6 +17,42 @@ export const logRouter = router({
         }
       })
     }),
+
+  addKeyPickupLog: publicProcedure
+    .input(
+      z.object({ studentId: z.string().length(7).regex(new RegExp('[0-9]{2}[A-Z0-9]{2}[0-9]{3}')) })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const result = await ctx.prisma.log.findFirst({
+        where: {
+          type: LogType.KEY_PICKUP
+        }
+      })
+
+      if (result !== null) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'PickupLogが既に存在します'
+        })
+      }
+
+      return await ctx.prisma.log.create({
+        data: {
+          reader_id: 0,
+          student_id: input.studentId,
+          type: LogType.KEY_PICKUP,
+          has_key: true
+        }
+      })
+    }),
+
+  deleteKeyPickupLog: publicProcedure.mutation(async ({ ctx }) => {
+    return await ctx.prisma.log.deleteMany({
+      where: {
+        type: LogType.KEY_PICKUP
+      }
+    })
+  }),
 
   getActiveUsers: publicProcedure.query(async ({ ctx }) => {
     const users = await ctx.prisma.user.findMany()
