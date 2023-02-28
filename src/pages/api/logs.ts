@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { generateHashedToken } from '../../utils/client'
 import { PrismaClient } from '@prisma/client'
+import { LogType } from '../../utils/const'
 
 const prisma = new PrismaClient()
 
@@ -17,6 +18,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return
     }
     const readerId = client.id
+
+    if (type === LogType.ENTER && hasKey) {
+      const result = await prisma.log.findFirst({
+        where: {
+          type: LogType.KEY_PICKUP
+        }
+      })
+
+      if (result !== null) {
+        await prisma.log.deleteMany({
+          where: {
+            type: LogType.KEY_PICKUP
+          }
+        })
+      }
+    }
+
     const log = await prisma.log.create({
       data: {
         reader_id: readerId,
