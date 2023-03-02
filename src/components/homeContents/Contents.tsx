@@ -7,17 +7,46 @@ import { MemberCount } from './MemberCount'
 import { HasKeyContext } from '../../pages'
 import { GeneralButton } from '../GeneralButton'
 import { useRouter } from 'next/router'
-import type { User } from '@prisma/client'
+import { useEffect } from 'react'
+import type { User, Log } from '@prisma/client'
 
-//ログのデータから鍵の有無を確認して画面を切り替える
-//鍵の有無は、「has_keyがtrueの後に退室もしくは途中退室でhas_keyがtrue」であった場合は鍵がないということ
-export const Contents = ({ authUrl, users }: { authUrl: string; users: User[] }) => {
+export const Contents = ({
+  authUrl,
+  users,
+  logs
+}: {
+  authUrl: string
+  users: User[]
+  logs: Log[]
+}) => {
   const router = useRouter()
   const session = useSession()
-  const { hasKey, setHasKey } = useContext(HasKeyContext)
+  const { setHasKey } = useContext(HasKeyContext)
+
   const user_id = session.data?.user?.id
   const myAccount = users.filter(user => user_id === user.id)
-  const G_AuthFlag = myAccount[0]?.student_id ? true : false
+  const myAccountStudent_id = myAccount[0]?.student_id
+  const G_AuthFlag = myAccountStudent_id ? true : false
+
+  useEffect(() => {
+    const typeIsOtherThanPickUp_array = logs.filter(log => log.type !== 3)
+    const latestLog = typeIsOtherThanPickUp_array[typeIsOtherThanPickUp_array.length - 1]
+    if (latestLog?.has_key) {
+      switch (latestLog.type) {
+        case 0:
+          setHasKey(true)
+          break
+        case 1:
+        case 2:
+          setHasKey(false)
+          break
+        default:
+          break
+      }
+    }
+    return
+  })
+
   const googleSignIn = () => {
     router.push(authUrl)
   }
@@ -38,20 +67,6 @@ export const Contents = ({ authUrl, users }: { authUrl: string; users: User[] })
       ) : (
         <Layout title='Key Manage App'>
           <div className='my-24'>
-            <div className='absolute top-5 left-5'>
-              <button
-                className='border-2 border-black'
-                onClick={() => {
-                  setHasKey(prev => !prev)
-                }}
-              >
-                {!hasKey ? (
-                  <span>鍵が取得済みの時の見た目へ</span>
-                ) : (
-                  <span>鍵が未取得の時の見た目へ</span>
-                )}
-              </button>
-            </div>
             <div className='flex items-center justify-center'>
               <KeyImage />
             </div>
@@ -59,7 +74,7 @@ export const Contents = ({ authUrl, users }: { authUrl: string; users: User[] })
               <MemberCount />
             </div>
             <div className='flex items-center justify-center'>
-              <Pickup />
+              <Pickup logs={logs} users={users} student_id={myAccountStudent_id} />
             </div>
           </div>
         </Layout>

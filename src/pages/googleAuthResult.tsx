@@ -63,7 +63,7 @@ const GoogleAuthResult = ({ users }: { users: User[] }) => {
             </>
           )}
           <div className='my-12'>
-            <GeneralButton label={'閉じる'} clickFunction={() => router.push("/")} />
+            <GeneralButton label={'閉じる'} clickFunction={() => router.push('/')} />
           </div>
         </div>
       </div>

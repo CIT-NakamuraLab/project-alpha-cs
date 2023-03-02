@@ -5,6 +5,7 @@ import { HasKeyContext } from '../../pages'
 
 export const KeyImage = () => {
   const { hasKey } = useContext(HasKeyContext)
+
   return (
     <>
       {hasKey ? (
