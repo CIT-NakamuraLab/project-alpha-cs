@@ -9,6 +9,7 @@ import { GeneralButton } from '../GeneralButton'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import type { User, Log } from '@prisma/client'
+import { LogType } from '../../utils/const'
 
 export const Contents = ({
   authUrl,
@@ -29,7 +30,7 @@ export const Contents = ({
   const G_AuthFlag = myAccountStudent_id ? true : false
 
   useEffect(() => {
-    const typeIsOtherThanPickUp_array = logs.filter(log => log.type !== 3)
+    const typeIsOtherThanPickUp_array = logs.filter(log => log.type !== LogType.KEY_PICKUP)
     const latestLog = typeIsOtherThanPickUp_array[typeIsOtherThanPickUp_array.length - 1]
     if (latestLog?.has_key) {
       switch (latestLog.type) {
