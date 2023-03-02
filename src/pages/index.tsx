@@ -1,9 +1,3 @@
-//このブランチの中でやること
-//済・学番取得判定の結果から認証画面の表示・非表示の切り替え
-//済・tRPCで研究室内の人数表示
-//・取りに行くボタンからログにこの情報を付随させて状態管理　キャンセル操作や鍵が研究室に持ち込まれたときに削除
-//済・鍵の有無は、「has_keyがtrueの後に退室もしくは途中退室でhas_keyがtrue」であった場合は鍵がないということなのでその判定結果によってTOPの画像を変更する
-
 import type { GetServerSideProps } from 'next'
 import { oAuth2Client, scope } from '../utils/google'
 import { signIn, useSession } from 'next-auth/react'
