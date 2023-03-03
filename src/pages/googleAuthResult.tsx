@@ -1,17 +1,19 @@
 import React from 'react'
 import Image from 'next/image'
 import { GeneralButton } from '../components/GeneralButton'
-import { prisma } from '../server/db/client'
 import type { GetServerSideProps } from 'next'
 import type { User } from '@prisma/client'
+import { prisma } from '../server/db/client'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
-type Props = {
-  userData: User[]
-}
+const GoogleAuthResult = ({ users }: { users: User[] }) => {
+  const session = useSession()
+  const router = useRouter()
+  const user_id = session.data?.user?.id
+  const myAccount = users.filter(user => user_id === user.id)
+  const authFlag = myAccount[0]?.student_id ? true : false
 
-const googleAuthResult = ({ userData }: Props) => {
-  const authFlag = false
-  console.log(userData)
   return (
     <div className='w-screen'>
       <div className='flex h-screen items-center justify-center'>
@@ -30,15 +32,15 @@ const googleAuthResult = ({ userData }: Props) => {
               <div className='mt-8 border-l-4 border-black pl-2'>
                 <div className='flex'>
                   <p className='w-20 text-left'>学籍番号:</p>
-                  <p className='w-40 sm:w-auto'>{userData[0]?.student_id}</p>
+                  <p className='w-40 sm:w-auto'>{myAccount[0]?.student_id}</p>
                 </div>
                 <div className='flex pt-2'>
                   <p className='w-20 text-left'>E-mail:</p>
-                  <p className='w-40 sm:w-auto'>{userData[0]?.email}</p>
+                  <p className='w-40 sm:w-auto'>{myAccount[0]?.email}</p>
                 </div>
                 <div className='flex pt-2'>
                   <p className='w-20 text-left'>氏名:</p>
-                  <p className='w-40 sm:w-auto'>{userData[0]?.name}</p>
+                  <p className='w-40 sm:w-auto'>{myAccount[0]?.name}</p>
                 </div>
               </div>
             </>
@@ -61,7 +63,7 @@ const googleAuthResult = ({ userData }: Props) => {
             </>
           )}
           <div className='my-12'>
-            <GeneralButton label={'閉じる'} clickFunction={() => console.log('close')} />
+            <GeneralButton label={'閉じる'} clickFunction={() => router.push('/')} />
           </div>
         </div>
       </div>
@@ -70,12 +72,12 @@ const googleAuthResult = ({ userData }: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const userData: User[] = await prisma.user.findMany()
+  const users: User[] = await prisma.user.findMany()
   return {
     props: {
-      userData
+      users
     }
   }
 }
 
-export default googleAuthResult
+export default GoogleAuthResult
