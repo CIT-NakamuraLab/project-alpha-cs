@@ -23,12 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = response.data
 
     if (!user.email?.endsWith('@s.chibakoudai.jp')) {
-      return res.status(403).json({ status: 'Error', message: 'Unsupported account type' })
+      return res.redirect(303, '/googleAuthResult')
     }
 
     const studentId = user.email.substring(1, 8)
 
-    const result = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: session.user?.id
       },
@@ -37,9 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     })
 
-    console.log(result)
-
-    res.status(200).json({ status: 'OK', student_id: studentId })
+    res.redirect(303, '/googleAuthResult')
   } else {
     res.status(401).json({ status: 'Unauthorized', message: 'Need to login with slack account' })
   }
