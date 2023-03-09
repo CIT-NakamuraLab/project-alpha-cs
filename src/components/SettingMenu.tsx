@@ -31,7 +31,7 @@ function SettingMenu({
           {bodyElement}
         </div>
         <div className='max-md:mb-5 md:mt-6 md:mb-10'>
-          <div className='flex flex-row items-center justify-center space-x-7 text-lg font-semibold decoration-2 underline-offset-8'>
+          <div className='flex flex-row items-center justify-center space-x-7 bg-white py-3 text-lg font-semibold decoration-2 underline-offset-8 max-md:fixed max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:z-30'>
             {isAdmin && (
               <Link
                 href='/log'
