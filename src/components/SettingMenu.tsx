@@ -12,14 +12,14 @@ export enum Select {
 function SettingMenu({
   select,
   title,
+  isAdmin,
   bodyElement
 }: {
   select: Select
   title: string
+  isAdmin: boolean
   bodyElement: ReactNode
 }) {
-  const isAdmin = true
-
   return (
     <div>
       <Link href='/'>
